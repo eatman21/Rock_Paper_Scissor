@@ -1,10 +1,19 @@
 import random as ra
 
+ROCK = 'r'
+PAPER = 'p'
+SCISSOR = 's'
+QUIT = 'q'
+STATS = 't'
+
 emoji_map = {
-    'r': '🪨',
-    'p': '📃',
-    's': '✂️'
+    ROCK: '🪨',
+    PAPER: '📃',
+    SCISSOR: '✂️'
 }
+
+
+choise = tuple(emoji_map.keys())
 
 
 def get_computer_choice(difficulty, choice):
@@ -18,7 +27,7 @@ def get_computer_choice(difficulty, choice):
         # Hard: tries to predict and counter player
         if ra.random() < 0.7:
             # Counter the most likely player choice
-            counters = {'r': 'p', 'p': 's', 's': 'r'}
+            counters = {ROCK: PAPER, PAPER: SCISSOR, SCISSOR: ROCK}
             return counters[ra.choice(choice)]
         return ra.choice(choice)
     else:
@@ -38,7 +47,7 @@ def display_stats(wins, losses, ties, total_games):
 
 
 def game():
-    choise = ('r', 'p', 's')
+    choise = (ROCK, PAPER, SCISSOR)
     wins = losses = ties = 0
 
     print("🎮 Welcome to Rock, Paper, Scissors!")
@@ -62,16 +71,16 @@ def game():
             print("Invalid choice. Please enter 1, 2, or 3.")
 
     print(f"\n🎯 Difficulty: {difficulty.upper()}")
-    print("Let's play! Enter 'q' to quit, 's' to see stats\n")
+    print("Let's play! Enter 'q' to quit, 't' to see stats\n")
 
     while True:  # loop to play again
-        user_choise = input('Rock, Paper, Scissor? (r/p/s/q/s): ').lower()
+        user_choise = input('Rock, Paper, Scissor? (r/p/s/q/t): ').lower()
 
         if user_choise == 'q':
             print("Thanks for playing!")
             display_stats(wins, losses, ties, wins + losses + ties)
             break
-        elif user_choise == 's':
+        elif user_choise == STATS:
             display_stats(wins, losses, ties, wins + losses + ties)
             continue
         elif user_choise not in choise:
@@ -86,9 +95,9 @@ def game():
             print("🤝 It's a tie!")
             ties += 1
         elif (
-            (user_choise == 'r' and computer_choise == 's') or
-            (user_choise == 'p' and computer_choise == 'r') or
-                (user_choise == 's' and computer_choise == 'p')):
+            (user_choise == ROCK and computer_choise == SCISSOR) or
+            (user_choise == PAPER and computer_choise == ROCK) or
+                (user_choise == SCISSOR and computer_choise == PAPER)):
             print("🎉 You win!")
             wins += 1
         else:
